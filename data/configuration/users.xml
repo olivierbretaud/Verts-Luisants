@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<user number="001" active="1" profil="0" delete="0">
+		<login><![CDATA[admin-verts-luisants]]></login>
+		<name><![CDATA[Olivier Bretaud]]></name>
+		<infos><![CDATA[]]></infos>
+		<password><![CDATA[94e46d7c9a5c6703078a36b0b4382e75a0104a3d]]></password>
+		<salt><![CDATA[MjK0ZCKft2]]></salt>
+		<email><![CDATA[]]></email>
+		<lang><![CDATA[fr]]></lang>
+	</user>
+</document>
