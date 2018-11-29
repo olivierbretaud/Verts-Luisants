@@ -757,6 +757,7 @@ class plxShow {
 			$title = plxUtils::strCheck($this->plxMotor->plxRecord_arts->f('title'));
 			$url = $this->plxMotor->plxRecord_arts->f('url');
 			# On effectue l'affichage
+
 			echo $this->plxMotor->plxRecord_arts->f('chapo')."\n";
 			if($format) {
 				$title = str_replace("#art_title", $title, $format);

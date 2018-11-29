@@ -1,6 +1,11 @@
 <?php include(dirname(__FILE__).'/header.php'); ?>
 
 	<main class="main">
+	<header class="header">
+		<div class="container">
+			<h1 class="no-margin heading-small"><?php $plxShow->artTitle(); ?></h1>
+		</div>
+	</header>
 
 		<div class="container">
 
@@ -10,10 +15,10 @@
 
 					<article class="article" id="post-<?php echo $plxShow->artId(); ?>">
 
-						<header>
-							<h2>
-								<?php $plxShow->artTitle(); ?>
-							</h2>
+
+						<?php $plxShow->artContent(); ?>
+
+						<footer>
 							<small>
 								<span class="written-by">
 									<?php $plxShow->lang('WRITTEN_BY'); ?> <?php $plxShow->artAuthor() ?>
@@ -25,13 +30,8 @@
 									<a href="<?php $plxShow->artUrl(); ?>#comments" title="<?php $plxShow->artNbCom(); ?>"><?php $plxShow->artNbCom(); ?></a>
 								</span>
 							</small>
-						</header>
-
-						<?php $plxShow->artThumbnail(); ?>
-						<?php $plxShow->artContent(); ?>
-
-						<footer>
 							<small>
+
 								<span class="classified-in">
 									<?php $plxShow->lang('CLASSIFIED_IN') ?> : <?php $plxShow->artCat() ?>
 								</span>

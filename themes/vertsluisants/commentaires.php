@@ -45,24 +45,24 @@
 
 		<fieldset>
 
-			<div class="grid">
-				<div class="col sml-12">
+			<div class="form-box">
+				<div class="col-form sml-12">
 					<label for="id_name"><?php $plxShow->lang('NAME') ?> :</label>
 					<input id="id_name" name="name" type="text" size="20" value="<?php $plxShow->comGet('name',''); ?>" maxlength="30" />
 				</div>
 			</div>
-			<div class="grid">
-				<div class="col sml-12 lrg-6">
+			<div class="form-box">
+				<div class="col-form sml-12 lrg-6">
 					<label for="id_mail"><?php $plxShow->lang('EMAIL') ?> :</label>
 					<input id="id_mail" name="mail" type="text" size="20" value="<?php $plxShow->comGet('mail',''); ?>" />
 				</div>
-				<div class="col sml-12 lrg-6">
+				<div class="col-form sml-12 lrg-6">
 					<label for="id_site"><?php $plxShow->lang('WEBSITE') ?> :</label>
 					<input id="id_site" name="site" type="text" size="20" value="<?php $plxShow->comGet('site',''); ?>" />
 				</div>
 			</div>
-			<div class="grid">
-				<div class="col sml-12">
+			<div class="form-box">
+				<div class="col-form sml-12">
 					<div id="id_answer"></div>
 					<label for="id_content" class="lab_com"><?php $plxShow->lang('COMMENT') ?> :</label>
 					<textarea id="id_content" name="content" cols="35" rows="6"><?php $plxShow->comGet('content',''); ?></textarea>
@@ -73,8 +73,8 @@
 
 			<?php if($plxShow->plxMotor->aConf['capcha']): ?>
 
-			<div class="grid">
-				<div class="col sml-12">
+			<div class="form-box">
+				<div class="col-form sml-12">
 					<label for="id_rep"><strong><?php echo $plxShow->lang('ANTISPAM_WARNING') ?></strong></label>
 					<?php $plxShow->capchaQ(); ?>
 					<input id="id_rep" name="rep" type="text" size="2" maxlength="1" style="width: auto; display: inline;" />
@@ -83,8 +83,8 @@
 
 			<?php endif; ?>
 
-			<div class="grid">
-				<div class="col sml-12">
+			<div class="form-box">
+				<div class="col-form sml-12">
 					<input type="hidden" id="id_parent" name="parent" value="<?php $plxShow->comGet('parent',''); ?>" />
 					<input class="blue" type="submit" value="<?php $plxShow->lang('SEND') ?>" />
 				</div>

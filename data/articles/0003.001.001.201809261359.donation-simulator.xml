@@ -1,0 +1,456 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<document>
+	<title><![CDATA[Donation simulator]]></title>
+	<allow_com>1</allow_com>
+	<template><![CDATA[article.php]]></template>
+	<chapo><![CDATA[<p>Procedente igitur mox tempore cum adventicium nihil inveniretur, relicta ora maritima in Lycaoniam adnexam</p>]]></chapo>
+	<content><![CDATA[<!-- Global site tag (gtag.js) - Google Analytics -->
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-22231398-5"></script>
+
+<script>
+ //GOOGLE TRACKING CODE	
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-22231398-5');
+
+
+
+function validateForm() {
+    var somme = document.getElementById("somme").value;
+    if (somme == "") {
+        alert("Somme non remplie");
+        return false;
+    } else {
+	// update some charity by charity data
+	// amf data:
+	document.getElementById("sommeLabel").innerHTML = somme;
+	document.getElementById("sommeLabel2").innerHTML = somme;
+	document.getElementById("sommeLabel3").innerHTML = somme;	
+	document.getElementById("amfNets").innerHTML = Math.round(somme/3.6); //nb of people protected with nets for that amount
+	document.getElementById("dwiPills").innerHTML = Math.round(somme/0.53); //nb of people protected with antiworm pills for that amount
+	document.getElementById("dwiPills").innerHTML = Math.round(somme/19); //nb of stoves distributed
+	calculate(somme);
+	calculateShare();
+	}
+}
+
+
+function calculate(somme) { // CHARITY BY CHARITY CALCULATOR FOR A GIVEN AMOUNT
+    //AMF
+	var povRed4AMF1 = 1.65; var povRed4AMF = povRed4AMF1 * somme;
+	var co2Gen4AMF1 = 0.00224; var co2Gen4AMF = co2Gen4AMF1 * somme;
+	var qaly4AMF1 = 0.004; var qaly4AMF = qaly4AMF1 * somme;
+	var waly4AMF1 = 0.000107; var halfWaly4AMF = (waly4AMF1 * somme)*2;
+	
+	document.getElementById("povRedAMF").innerHTML = "$"+povRed4AMF.toFixed(0) +" in poverty reduction";
+	document.getElementById("co2GenAMF").innerHTML = co2Gen4AMF.toFixed(2) +" tons of CO2equ";
+	document.getElementById("qalyAMF").innerHTML = qaly4AMF.toFixed(1) +" QALY";
+	document.getElementById("halfWalyAMF").innerHTML =  halfWaly4AMF.toFixed(1) +" years";
+   //DWI
+	var school4DWI1 = 3.7736/4.345; var school4DWIm = school4DWI1 * somme; var school4DWIy = school4DWIm/12;
+	var povRed4DWI1 = 17.6086; var povRed4DWI = povRed4DWI1 * somme;
+	var co2Gen4DWI1 = 0.008664; var co2Gen4DWI = co2Gen4DWI1 * somme;
+	var waly4DWI1 = 0.00117; var halfWaly4DWI = (waly4DWI1 * somme)*2;
+	var qaly4DWI1 = 0.0004; var qaly4DWI = qaly4DWI1 * somme; 
+
+	if (school4DWIm<12){document.getElementById("schoolDWI").innerHTML = school4DWIm.toFixed(1) +" additionnal months of school added to 1 child";}
+	else {document.getElementById("schoolDWI").innerHTML = school4DWIy.toFixed(1) +" additionnal years of school";}
+	document.getElementById("povRedDWI").innerHTML = "$"+povRed4DWI.toFixed(0) +" in poverty reduction";
+	document.getElementById("co2GenDWI").innerHTML = co2Gen4DWI.toFixed(2) +" tons of CO2equ generated";
+	document.getElementById("halfWalyDWI").innerHTML =  halfWaly4DWI.toFixed(1) +" years";
+	document.getElementById("qalyDWI").innerHTML =  qaly4DWI.toFixed(1) +" years";
+   //UGA
+	var povRed4UGA1 = 12.636; var povRed4UGA = povRed4UGA1 * somme;
+	var co2Spa4UGA1 = 0.1656; var co2Spa4UGA = co2Spa4UGA1 * somme;
+	var waly4UGA1 = 0.00095; var halfWaly4UGA = (waly4UGA1 * somme)*2;
+
+	document.getElementById("povRedUGA").innerHTML = "$"+povRed4UGA.toFixed(0) +" in poverty reduction";
+	document.getElementById("co2SpaUGA").innerHTML = co2Spa4UGA.toFixed(1) +" tons of CO2equ";
+	document.getElementById("halfWalyUGA").innerHTML =  halfWaly4UGA.toFixed(1) +" years";
+
+}
+
+function calculateTotal(AMFgiven, DWIgiven, UGAgiven) { // TOTAL generated FOR A GIVEN AMOUNT donated to each charity
+    //AMF
+	var povRed4AMF1 = 1.65; var povRed4AMF = povRed4AMF1 * AMFgiven;
+	var co2Gen4AMF1 = 0.00224; var co2Gen4AMF = co2Gen4AMF1 * AMFgiven;
+	var qaly4AMF1 = 0.004; var qaly4AMF = qaly4AMF1 * AMFgiven;
+	var waly4AMF1 = 0.000107; var waly4AMF = waly4AMF1 * AMFgiven;	
+	
+   //DWI
+	var school4DWI1 = 3.7736/4.345; var school4DWIm = school4DWI1 * DWIgiven; var school4DWIy = school4DWIm/12;
+	var povRed4DWI1 = 17.6086; var povRed4DWI = povRed4DWI1 * DWIgiven;
+	var co2Gen4DWI1 = 0.008664; var co2Gen4DWI = co2Gen4DWI1 * DWIgiven;
+	var waly4DWI1 = 0.00117; var waly4DWI = waly4DWI1 * DWIgiven;
+	var qaly4DWI1 = 0.0004; var qaly4DWI = qaly4DWI1 * DWIgiven; 
+
+	
+   //UGA
+	var povRed4UGA1 = 12.636; var povRed4UGA = povRed4UGA1 * UGAgiven;
+	var co2Spa4UGA1 = 0.1656; var co2Spa4UGA = co2Spa4UGA1 * UGAgiven;
+	var waly4UGA1 = 0.00095; var Waly4UGA = waly4UGA1 * UGAgiven;
+
+   //TOTAL
+	var povRedTOT = povRed4AMF + povRed4DWI + povRed4UGA;
+	var qalyTOT = qaly4AMF + qaly4DWI;
+	var bestQALY = bestFormatYear(qalyTOT);
+	var co2TOT = co2Spa4UGA  - co2Gen4AMF - co2Gen4DWI;
+	var halfWalyTOT = (waly4AMF + waly4DWI + Waly4UGA)*2;
+	var bestHalfWALY = bestFormatYear(halfWalyTOT);
+
+   // average european carbon footprint for 1 year
+	var eurCFy = 13.8; //in co2equ - Tukker et al. (2016)
+	var eurCFyAvoided = co2TOT/eurCFy; 
+	var bestCF = bestFormatYear(eurCFyAvoided);
+	var bestSchool = bestFormatYear(school4DWIy);
+
+   // show the results
+	if (qalyTOT>0){ txt="+ Saves a life for an additionnal "+ bestQALY +" in perfect health ("+qalyTOT.toFixed(1)+" QALY)";}else{txt="+";}
+		document.getElementById("qalyTOT").innerHTML = txt;
+	if (povRedTOT>0){txt = "+ Generates $"+povRedTOT.toFixed(0)+" in the poorest countries";}else{txt="+";}
+		document.getElementById("povRedTOT").innerHTML = txt;
+	if (eurCFyAvoided>0){txt = "+ Avoids "+bestCF+" of a European's carbon footprint ("+co2TOT.toFixed(1)+" tons of CO2equ)(6)";}
+	else{
+		if (eurCFyAvoided<0){bestCFgen=bestFormatYear(-eurCFyAvoided); co2TOT=-co2TOT.toFixed(1);txt = "+ Generates "+bestCFgen+" of a European's carbon footprint ("+co2TOT+" tons of CO2equ)(6)";}
+	}	
+	if (eurCFyAvoided==0){txt="+";}
+		document.getElementById("co2TOT").innerHTML = txt;
+	if (halfWalyTOT>0){txt =  "+ Increases someone's happiness by 50% for "+bestHalfWALY+" (half-WALY)(7)";}else{txt="+";}
+		document.getElementById("walyTOT").innerHTML  = txt;
+	if (school4DWIm>0){ txt = "+ Offers "+bestSchool+" of school";}else{txt="+";}
+		document.getElementById("schoolTOT").innerHTML = txt;
+
+}
+
+function bestFormatYear(year) {
+	var bestF=0;
+	if (year>=1){
+			if (year>=2) { bestF = year.toFixed(1)+" years";}
+			else { bestF = year.toFixed(1)+" year";}
+	}else{	mo = year*12; bestF = mo.toFixed(0)+" months";}
+	return bestF;
+}
+</script>
+<style>
+ 
+
+
+
+/* frame that contains the menu */
+
+
+/* frame around the body after the menu */
+.blockframe {
+	text-align: center;
+
+
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4px;
+}
+
+/* frame around the footer */
+.footerFrame {
+	text-align: center;
+	width: 100%;
+
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 4px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 40%;
+    height: 15px;
+    border-radius: 5px;
+    height: 25px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    display:inline-block;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgb(43, 161, 111);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;	
+    background-color: rgb(43, 161, 111);
+    cursor: pointer;
+}
+
+
+
+.lockbox {
+    border:2px 
+    display:inline-block;
+    background:#ff0000;
+    width: 3%;
+}
+
+.prioritylabel {
+    display:inline-block; 
+    width: 30%;
+}
+
+/* all the spans in which I show a number */
+.valueBox {
+    display:inline-block; 
+    width: 30%;
+ font-size: 1.3em;
+}
+
+
+/* box with resulting non-profits */
+.resultShare {
+    display:inline-block; 
+    width: 100%;
+    font-size: 120%;	
+}
+
+
+
+/* label for the TOP button */
+.toplink {
+    display:inline-block;
+width: 100%;
+text-align: center;
+}
+
+/* section for a vignette and some charity text*/
+.vignetteSection {
+        text-align: center;
+
+	margin: auto;
+}
+
+
+</style>
+</head>
+<body>
+
+
+
+<!-- FRAME -->
+<div class="blockframe"> 
+
+<!-- PAGE TITLE -->
+
+<h3>Calculate the difference<br/> you could make</h3>
+
+<!-- AMOUNT SIMULATED -->
+<h4 class="text-green">Amount you consider donating: $
+<div class="input-box">
+<input id="somme" Value=100><button type="button" class="button-green" onclick="validateForm()">Update</button>
+</div>
+</h4>
+
+<!-- RESULTS -->
+<h3>Potential impact of your donation</h3>
+<div class="impact-box">
+<h5 class="text-green">
+<p id="schoolTOT"></p>
+<p id="qalyTOT"> </p>
+<p id="co2TOT"> </p> 
+<p id="povRedTOT"> </p>		
+<p id="walyTOT"> </p>
+</h5>
+</div>
+
+<!-- PRIORITY SLIDERS -->
+<h3>Define your priorities</h3>
+  <div>Slide and lock to adjust your donation</div>
+ <a class="toplink" href="#top">Return to your donation</a> 
+
+  <div class="slidecontainer">  <span class="prioritylabel"> Health </span>  <input type="range" min="0" max="100" value="50" 
+  class="slider" id="slider1">  <span class="valueBox"><span id="value1"></span>% </span></div>
+
+  <div class="slidecontainer">  <span class="prioritylabel"> Education</span>  <input type="range" min="0" max="100" value="50" 
+  class="slider" id="slider5">  <span class="valueBox"><span id="value5"></span>% </span></div> 
+
+  <div class="slidecontainer">  <span class="prioritylabel"> Carbon reduction</span>  <input type="range" min="0" max="100" value="50" 
+  class="slider" id="slider3">  <span class="valueBox"><span id="value3"></span>% </span></div>
+
+  <span id="val"></span>
+  <div class="slidecontainer">  <span class="prioritylabel"> Poverty reduction</span>  <input type="range" min="0" max="100" value="50" 
+  class="slider" id="slider2">  <span class="valueBox"><span id="value2"></span>% </span></div>
+
+  <div class="slidecontainer">  <span class="prioritylabel"> Happiness</span>  <input type="range" min="0" max="100" value="50" 
+  class="slider" id="slider4">  <span class="valueBox"><span id="value4"></span>% </span></div>
+
+
+<!-- SELECTION -->
+<h2>Your donation in detail</h2>
+<p>To have that impact, we recommend to give as follows:  <a class="toplink" href="#top">Return to your donation</a></p>
+<h5>
+<p> <span class="resultShare">Against Malaria Foundation </span>
+<span class="valueBoxWhite"><span id="amf"></span>$</span>
+<a class="toplink" href="#amf_descr">[Learn more]</a></p> 
+
+<p> <span class="resultShare">+ Deworm the World Initiative </span>
+<span class="valueBoxWhite"><span id="dwi" ></span>$</span>
+<a class="toplink" href="#dwi_descr">[Learn more]</a></p> 
+
+<p> <span class="resultShare">+ Ugastove Project </span>
+<span class="valueBoxWhite"><span id="uga"></span>$</span>
+<a class="toplink" href="#uga_descr">[Learn more]</a></p> 
+</h5>
+<!-- INDIVIDUAL CHARITY RESULTS -->
+<h2>If you prefer to give <br/>to one charity only</h2>
+
+<!-- AMF -->
+<div class="vignetteSection" id="amf_descr">
+<a href="https://www.againstmalaria.com/" target="blank">
+<h3>Against Malaria Foundation </h3>
+</a>
+
+<p>The Foundation distributes mosquito nets to protect the people from the disease in the malaria-active areas of 36 countries. For $<span id="sommeLabel"></span> 
+given, the charity covers all the costs (1) of protecting <span id="amfNets"></span> persons with nets for a year (2). This results in health benefits for 
+an average of <span id="qalyAMF"></span> (3)(4). The health benefits also bring <span id="povRedAMF"></span> (by increasing labor force). The poverty
+ reduction generates an increased well-being (5), that can be expressed as <span id="halfWalyAMF"> </span> for which someone's happiness is increased by 50%. It also 
+generates additional CO2 emissions (<span id="co2GenAMF"></span>)(8).</p>
+<p>The Foundation is a US-based evidence-based charity and was top-rated by <a href=https://www.givewell.org/ target="blank">GiveWell</a>, Giving What We Can, The Life You Can Save, and 
+<a href=https://greatnonprofits.org/ target="blank">Greatnonprofits.org</a>.</p>
+</div>
+
+<!-- DWI -->
+<div class="vignetteSection" id="dwi_descr"> 
+<a href="https://www.evidenceaction.org/dewormtheworld/" target="blank"> 
+<h3>Deworm the World Initiative </h3></a>
+
+<p>The non-profit distributes anti-worm pills in the worm-infested areas of 8 countries. For $<span id="sommeLabel2"></span> given, the charity covers all the 
+costs (1) of deworming <span id="dwiPills"></span> children for a year (9).  This results in better health for an average of <span id="qalyDWI"></span> (3)(10).
+Avoiding worm infection is the only reliable to increase school attendance and results (12). Which is why the intervention leads to <span id="schoolDWI"></span> 
+attended. Health and education benefits translate into <span id="povRedDWI"></span>
+(higher-pay jobs + more labour force)(10)(11).The poverty reduction 
+generates an increased well-being (5), that can be expressed as <span id="halfWalyDWI"> </span> for which someone's happiness is increased by 50%. It also 
+generates additional CO2 emissions (<span id="co2GenDWI"></span>)(8).</p>
+<p>The charity is part of Evidence Action, a US-based evidence-based organization that was top-rated by <a href=https://www.givewell.org/ target="blank">GiveWell</a>.</p>
+</div>
+
+<!-- UGA -->
+<div class="vignetteSection" id="uga_descr">
+<a href="https://www.cooleffect.org/content/project/efficient-cookstove-project" target="blank"><h3>Ugastove Project</a> </h3>
+<p>The organization sells energy-efficient stoves in Uganda founded at 75% by your donation. For $<span id="sommeLabel3"></span>, <span id="ugasto"></span> 
+stoves are financed and distributed (13). Those stoves will save <span id="co2SpaUGA"></span> in the next 7 years (14). Spared charcoal/wood represents
+ <span id="povRedUGA"> </span> (14)(15) which will further increase a household's happiness by 50% for <span id="halfWalyUGA"> </span>  (5).</p>
+<p>You crowdfound the project by buying carbon from Cool Effect, a US-based non-profit. Cool Effect was audited for that project and received the Earthwood Gold
+Standard, and the JP Morgan ventures verification.
+</p></div>
+
+<!-- REFERENCES -->
+<div class="vignetteSection">
+<h2> References and notes</h2>
+<p>(1) All costs included: administrative, operating, research, foundraising costs... </p>
+<p>(2) For that number, we use a cost of $3.60/net/person/year from <a target="blank" href=https://docs.google.com/spreadsheets/d/1TyQkFHIgVrA2SVaXtG4ZzKri5BYKGXL6n64qxc6K6sw/edit#gid=115155829>Givewell 2016 online data</a></p>
+<p>(3) A <a href="https://en.wikipedia.org/wiki/Quality-adjusted_life_year" target="blank">Quality-Adjusted Life Year (QALY)</a> is a year in perfect health.</p>
+<p>(4) For calculations, the <a target="blank" href="https://docs.google.com/spreadsheets/d/1TyQkFHIgVrA2SVaXtG4ZzKri5BYKGXL6n64qxc6K6sw/edit#gid=115155829">
+Givewell's model of 2016</a> restricts first to children saved <5 (a majority of nets distributed), whose average life expectency
+in perfect health (QALE) is 30 in the poorest countries (where nets are given). Then, the 2017 model takes partially into accounts the adults protected.</p>
+<p>(5) It was shown that doubling a yearly income increases subjective well-being (reported on a 0-100% scale) by 5% (Stevenson & Wolfers, 2013). </p>
+<p>(6) We used the average carbon footprint of a European citizen for a year (13.8 co2equ according to Tukker et al., 2016). </p>
+<p>(7) A Well-Being Adjusted Life Year is the well-being equivalent of a QALY(3): a year with 100% happiness. Happiness is measured by a subjective report (on 
+a 0-100% scale). We neglect health-related increase of happiness by a lack of a reliable model.</p>
+<p>(8) We take into consideration both the carbon footprint generated from the additionnal time alive (with 0.36 tons of CO2equ/year according to Asane-Otoo, 
+2015) and the increased carbon footprint from increased consumption.</p>
+<p>(9) For that number, we use a cost of $0.53/person/year from <a target="blank" href=https://docs.google.com/spreadsheets/d/1TyQkFHIgVrA2SVaXtG4ZzKri5BYKGXL6n64qxc6K6sw/edit#gid=115155829>Givewell 2016 online data</a></p>
+<p>(10)<a target="blank" href="https://docs.google.com/spreadsheets/d/1TyQkFHIgVrA2SVaXtG4ZzKri5BYKGXL6n64qxc6K6sw/edit#gid=115155829">
+Givewell's model of 2016</a></p>
+<p>(11)after 10 years: +20% income / +3.4h of work/week (10)</p>
+<p>(12)+25% attendance = 2 more weeks of school (10)</p>
+<p>(13) Data from the Gold Standard Full Monitoring Report 2013 for that project</p>
+<p>(14)This figure takes into account an adjustment for a 73% drop-off of usage (Eathwood verification report), for the fact that some users are owners of a 
+second cookstove that they use in parallel (13), for a potential 7% rebound effect (Druckman, 2011) and for a 2% yearly discount rate for long-term uncertainty.</p>
+<p>(15) Available yearly household income is increased from 9% (Validation report ThuvRheinland) to 15% (Full Monitoring Report 2013) for 7 years.</p>
+</div>
+
+</div>
+
+<div  class="footerFrame">
+2018 Adrien Chopin - <a target="blank" href="https://creativecommons.org/licenses/by/4.0/">Copyleft CC BY 4.0 </a>
+</div>
+
+
+<script> // SLIDERS MAGIC
+
+	// define var for values of each header and span text nearby
+	var sli1 = document.getElementById("slider1");
+	var sli2 = document.getElementById("slider2");
+	var sli3 = document.getElementById("slider3");
+	var sli4 = document.getElementById("slider4");
+	var sli5 = document.getElementById("slider5");
+        var val1 = document.getElementById("value1");
+	var val2 = document.getElementById("value2");
+	var val3 = document.getElementById("value3");
+	var val4 = document.getElementById("value4");
+	var val5 = document.getElementById("value5");
+
+	// show those values in the span text nearby
+	val1.innerHTML = Math.round(sli1.value);
+	val2.innerHTML = Math.round(sli2.value);
+	val3.innerHTML = Math.round(sli3.value);
+	val4.innerHTML = Math.round(sli4.value);
+	val5.innerHTML = Math.round(sli5.value);
+
+	// when moving sliders, update everything
+	sli1.oninput = function() {  			val1.innerHTML = this.value;	calculateShare();	}
+	sli2.oninput = function() {  			val2.innerHTML = this.value,	calculateShare();	}
+	sli3.oninput = function() {  			val3.innerHTML = this.value;	calculateShare();	}
+	sli4.oninput = function() { 			val4.innerHTML = this.value;	calculateShare();	}
+	sli5.oninput = function() {  			val5.innerHTML = this.value;	calculateShare();	}
+
+	validateForm();
+	
+// VERY IMPORTANT - this is the core of the model for the recommended donation
+	function calculateShare() {
+		// retrieve current coefficients (priorities)
+		var heaC = Math.round(sli1.value); // will go to AMF
+		var povC = Math.round(sli2.value); // will go to DWI
+		var co2C = Math.round(sli3.value); // will go to UGA
+		var walyC = Math.round(sli4.value); // will go to DWI
+		var eduC = Math.round(sli5.value); // will go to DWI
+		var tot = document.getElementById("somme").value;
+		var totWeight = heaC  + povC  + co2C  + walyC  + eduC;
+
+
+		// calculate the final amount for each non-profit
+		var AMFtot = Math.round(heaC/totWeight*tot);
+		var DWItot = Math.round((povC+walyC+eduC)/totWeight*tot); //this is to force number format
+		var UGAtot = Math.round(co2C/totWeight*tot);
+
+		// show them
+		document.getElementById("amf").innerHTML = AMFtot ;
+		document.getElementById("dwi").innerHTML = DWItot ;
+		document.getElementById("uga").innerHTML = UGAtot ;
+		
+		// calculate results
+		calculateTotal(AMFtot, DWItot, UGAtot);
+
+	}
+
+</script>]]></content>
+	<tags><![CDATA[]]></tags>
+	<meta_description><![CDATA[]]></meta_description>
+	<meta_keywords><![CDATA[]]></meta_keywords>
+	<title_htmltag><![CDATA[]]></title_htmltag>
+	<thumbnail><![CDATA[data/medias/donation.jpg]]></thumbnail>
+	<thumbnail_alt><![CDATA[]]></thumbnail_alt>
+	<thumbnail_title><![CDATA[]]></thumbnail_title>
+	<date_creation><![CDATA[201809261359]]></date_creation>
+	<date_update><![CDATA[201810221404]]></date_update>
+</document>
